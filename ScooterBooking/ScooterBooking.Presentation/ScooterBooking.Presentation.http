@@ -1,0 +1,6 @@
+@ScooterBooking.Presentation_HostAddress = http://localhost:5260
+
+GET {{ScooterBooking.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
