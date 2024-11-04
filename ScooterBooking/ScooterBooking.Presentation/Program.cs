@@ -1,7 +1,11 @@
+using ScooterBooking.Infrastructure.DI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
 
 var app = builder.Build();
 
@@ -13,4 +17,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.Run();
+await app.RunAsync();
