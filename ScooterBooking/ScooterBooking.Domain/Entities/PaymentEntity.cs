@@ -8,6 +8,6 @@ namespace ScooterBooking.Domain.Entities
         public PaymentStatus Status { get; set; }
 
         public Guid BookingId { get; set; }
-        public BookingEntity Booking { get; set; } = new();
+        public BookingEntity? Booking { get; set; }
     }
 }

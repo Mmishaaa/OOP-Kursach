@@ -9,8 +9,8 @@ namespace ScooterBooking.Domain.Entities
         public DateTime CreatedAt { get; set; }
 
         public Guid UserId { get; set; }
-        public UserEntity User { get; set; } = new();
+        public UserEntity? User { get; set; }
         public Guid BookingId { get; set; }
-        public BookingEntity Booking { get; set; } = new();
+        public BookingEntity? Booking { get; set; }
     }
 }

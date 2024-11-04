@@ -10,8 +10,8 @@ namespace ScooterBooking.Domain.Entities
         public ScooterStatus Status { get; set; }
 
         public Guid InsuranceId { get; set; }
-        public InsuranceEntity Insurance { get; set; } = new();
+        public InsuranceEntity? Insurance { get; set; }
         public Guid LocationId { get; set; }
-        public LocationEntity Location { get; set; } = new();
+        public LocationEntity? Location { get; set; }
     }
 }
