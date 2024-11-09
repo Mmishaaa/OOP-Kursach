@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScooterBooking.Domain.Entities;
-using ScooterBooking.Domain.Interfaces;
+using ScooterBooking.Domain.Interfaces.Repositories;
 using ScooterBooking.Domain.PaginationModels;
 
 namespace ScooterBooking.Infrastructure.Repositories
