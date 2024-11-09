@@ -1,6 +1,6 @@
 ﻿namespace ScooterBooking.Domain.Entities
 {
-    public class PricingModel : BaseEntity
+    public class PricingEntity : BaseEntity
     {
         public decimal SpeedPriceHour { get; set; }
         public int MaxSpeed { get; set; }
