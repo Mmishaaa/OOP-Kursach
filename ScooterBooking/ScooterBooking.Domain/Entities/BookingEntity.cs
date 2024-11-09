@@ -7,8 +7,8 @@
         public decimal TotalPrice { get; set; }
 
         public Guid UserId { get; set; }
-        public UserEntity User { get; set; } = new();
+        public UserEntity? User { get; set; }
         public Guid ScooterId { get; set; }
-        public ScooterEntity Scooter { get; set; } = new();
+        public ScooterEntity? Scooter { get; set; }
     }
 }

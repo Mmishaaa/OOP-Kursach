@@ -6,6 +6,6 @@
         public int MaxSpeed { get; set; }
 
         public Guid ScooterId { get; set; }
-        public ScooterEntity Scooter { get; set; } = new();
+        public ScooterEntity? Scooter { get; set; }
     }
 }
