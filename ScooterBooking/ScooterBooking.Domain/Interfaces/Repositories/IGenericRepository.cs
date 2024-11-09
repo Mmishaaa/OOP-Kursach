@@ -1,7 +1,7 @@
 ﻿using ScooterBooking.Domain.Entities;
 using ScooterBooking.Domain.PaginationModels;
 
-namespace ScooterBooking.Domain.Interfaces
+namespace ScooterBooking.Domain.Interfaces.Repositories
 {
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {

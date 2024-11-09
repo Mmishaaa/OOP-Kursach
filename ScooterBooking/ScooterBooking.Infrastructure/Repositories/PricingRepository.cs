@@ -1,5 +1,5 @@
 ﻿using ScooterBooking.Domain.Entities;
-using ScooterBooking.Domain.Interfaces;
+using ScooterBooking.Domain.Interfaces.Repositories;
 
 namespace ScooterBooking.Infrastructure.Repositories
 {
