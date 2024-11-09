@@ -5,11 +5,13 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterBooking.Presentation", "ScooterBooking.Presentation\ScooterBooking.Presentation.csproj", "{54F7BDE6-A15E-4421-BD50-B9E01FF0EDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterBooking.Domain", "ScooterBooking.Domain\ScooterBooking.Domain.csproj", "{3079EA0D-AF2D-4F10-B868-F3CDF00EA8E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterBooking.Domain", "ScooterBooking.Domain\ScooterBooking.Domain.csproj", "{3079EA0D-AF2D-4F10-B868-F3CDF00EA8E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterBooking.Application", "ScooterBooking.Application\ScooterBooking.Application.csproj", "{E027C1D3-428F-47D7-973B-8C92057698CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterBooking.Application", "ScooterBooking.Application\ScooterBooking.Application.csproj", "{E027C1D3-428F-47D7-973B-8C92057698CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterBooking.Infrastructure", "ScooterBooking.Infrastructure\ScooterBooking.Infrastructure.csproj", "{A944DA24-89F7-4E17-9A31-155FB4CAC458}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterBooking.Infrastructure", "ScooterBooking.Infrastructure\ScooterBooking.Infrastructure.csproj", "{A944DA24-89F7-4E17-9A31-155FB4CAC458}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2D58C034-830B-4DBB-8E45-90A0B9189C41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A944DA24-89F7-4E17-9A31-155FB4CAC458}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A944DA24-89F7-4E17-9A31-155FB4CAC458}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A944DA24-89F7-4E17-9A31-155FB4CAC458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D58C034-830B-4DBB-8E45-90A0B9189C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D58C034-830B-4DBB-8E45-90A0B9189C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D58C034-830B-4DBB-8E45-90A0B9189C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D58C034-830B-4DBB-8E45-90A0B9189C41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

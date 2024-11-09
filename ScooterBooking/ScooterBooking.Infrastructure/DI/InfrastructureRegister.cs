@@ -14,10 +14,17 @@ namespace ScooterBooking.Infrastructure.DI
                 configuration.GetSection(nameof(DatabaseOptions)).Bind(options);
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
             {
-                services.AddDbContext<ApplicationDbContext>(option =>
-                    option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                var dbOptions = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+                options.UseMySql(
+                    dbOptions.ConnectionString,
+                    ServerVersion.AutoDetect(dbOptions.ConnectionString), 
+                    options => options.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: System.TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null)
+                );
             });
         }
     }
