@@ -4,6 +4,6 @@ namespace ScooterBooking.Application.ViewModels.PaymentViewModel
 {
     public record UpdatePaymentViewModel(
         PaymentMethod Method,
-        PaymentStatus Status,
+        decimal EnteredPrice,
         Guid BookingId);
 }

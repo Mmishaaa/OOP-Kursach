@@ -3,7 +3,7 @@
     public record CreateBookingViewModel(
         DateTime StartsAt,
         DateTime EndsAt,
-        decimal TotalPrice,
+        //decimal TotalPrice,
         Guid UserId,
         Guid ScooterId);
 }

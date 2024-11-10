@@ -30,17 +30,17 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedResult<ShortPaymentViewModel>> GetAllAsync([FromQuery] int pageNumber, int pageSize, CancellationToken cancellationToken)
+        public async Task<PagedResult<PaymentViewModel>> GetAllAsync([FromQuery] int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var pagedResult = await _paymentService.GetAllAsync(pageNumber, pageSize, cancellationToken);
-            return _mapper.Map<PagedResult<ShortPaymentViewModel>>(pagedResult);
+            return _mapper.Map<PagedResult<PaymentViewModel>>(pagedResult);
         }
 
         [HttpGet("{id}")]
-        public async Task<ShortPaymentViewModel> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<PaymentViewModel> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var paymentEntity = await _paymentService.GetByIdAsync(id, cancellationToken);
-            return _mapper.Map<ShortPaymentViewModel>(paymentEntity);
+            return _mapper.Map<PaymentViewModel>(paymentEntity);
         }
 
         [HttpPost]
@@ -53,11 +53,11 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<PaymentViewModel> Update([FromRoute] Guid id, [FromBody] UpdatePaymentViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<PaymentViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdatePaymentViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updatePaymentViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<PaymentEntity>(viewModel);
-            var result = await _paymentService.UpdateAsync(id, modelToUpdate, cancellationToken);
+            var result = await _paymentService.UpdateAsync(id, modelToUpdate, viewModel.EnteredPrice, cancellationToken);
             return _mapper.Map<PaymentViewModel>(result);
         }
 

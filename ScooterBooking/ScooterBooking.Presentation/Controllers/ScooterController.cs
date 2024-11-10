@@ -53,7 +53,7 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ScooterViewModel> Update([FromRoute] Guid id, [FromBody] UpdateScooterViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<ScooterViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateScooterViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updateScooterViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<ScooterEntity>(viewModel);

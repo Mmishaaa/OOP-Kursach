@@ -30,21 +30,21 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedResult<ShortInsuranceViewModel>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+        public async Task<PagedResult<ShortInsuranceViewModel>> GetAllAsync([FromQuery] int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var pagedResult = await _insuranceService.GetAllAsync(pageNumber, pageSize, cancellationToken);
             return _mapper.Map<PagedResult<ShortInsuranceViewModel>>(pagedResult);
         }
 
         [HttpGet("{id}")]
-        public async Task<ShortInsuranceViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ShortInsuranceViewModel> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var insuranceEntity = await _insuranceService.GetByIdAsync(id, cancellationToken);
             return _mapper.Map<ShortInsuranceViewModel>(insuranceEntity);
         }
 
         [HttpPost]
-        public async Task<InsuranceViewModel> CreateAsync(CreateInsuranceViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<InsuranceViewModel> CreateAsync([FromBody] CreateInsuranceViewModel viewModel, CancellationToken cancellationToken)
         {
             await _createInsuranceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var insuranceEntity = _mapper.Map<InsuranceEntity>(viewModel);
@@ -53,7 +53,7 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<InsuranceViewModel> Update(Guid id, UpdateInsuranceViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<InsuranceViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateInsuranceViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updateInsuranceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<InsuranceEntity>(viewModel);
@@ -62,7 +62,7 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public Task DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             return _insuranceService.DeleteAsync(id, cancellationToken);
         }

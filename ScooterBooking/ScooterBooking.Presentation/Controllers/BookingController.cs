@@ -47,13 +47,13 @@ namespace ScooterBooking.Presentation.Controllers
         public async Task<BookingViewModel> CreateAsync([FromBody] CreateBookingViewModel viewModel, CancellationToken cancellationToken)
         {
             await _createBookingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
-            var assistance = _mapper.Map<BookingEntity>(viewModel);
-            var result = await _bookingService.AddAsync(assistance, cancellationToken);
+            var bookingEntity = _mapper.Map<BookingEntity>(viewModel);
+            var result = await _bookingService.AddAsync(bookingEntity, cancellationToken);
             return _mapper.Map<BookingViewModel>(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<BookingViewModel> Update([FromRoute] Guid id, [FromBody] UpdateBookingViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<BookingViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateBookingViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updateBookingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<BookingEntity>(viewModel);

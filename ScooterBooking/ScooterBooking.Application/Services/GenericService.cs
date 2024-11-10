@@ -17,9 +17,9 @@ namespace ScooterBooking.Application.Services
             _genericRepository = genericRepository;
             _mapper = mapper;
         }
-        public virtual async Task<TEntity> AddAsync(TEntity model, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> AddAsync(TEntity bookingEntity, CancellationToken cancellationToken)
         {
-            var modelToCreate = _mapper.Map<TEntity>(model);
+            var modelToCreate = _mapper.Map<TEntity>(bookingEntity);
             var entity = await _genericRepository.AddAsync(modelToCreate, cancellationToken);
             return _mapper.Map<TEntity>(entity);
         }

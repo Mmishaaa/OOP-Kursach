@@ -53,7 +53,7 @@ namespace UserBooking.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<UserViewModel> Update([FromRoute] Guid id, [FromBody] UpdateUserViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<UserViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updateUserViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<UserEntity>(viewModel);

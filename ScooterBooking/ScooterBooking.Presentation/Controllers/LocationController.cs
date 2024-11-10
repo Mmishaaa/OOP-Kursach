@@ -31,21 +31,21 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedResult<ShortLocationViewModel>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+        public async Task<PagedResult<ShortLocationViewModel>> GetAllAsync([FromQuery] int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var pagedResult = await _locationService.GetAllAsync(pageNumber, pageSize, cancellationToken);
             return _mapper.Map<PagedResult<ShortLocationViewModel>>(pagedResult);
         }
 
         [HttpGet("{id}")]
-        public async Task<ShortLocationViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ShortLocationViewModel> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var locationEntity = await _locationService.GetByIdAsync(id, cancellationToken);
             return _mapper.Map<ShortLocationViewModel>(locationEntity);
         }
 
         [HttpPost]
-        public async Task<LocationViewModel> CreateAsync(CreateLocationViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<LocationViewModel> CreateAsync([FromBody] CreateLocationViewModel viewModel, CancellationToken cancellationToken)
         {
             await _createLocationViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var locationEntity = _mapper.Map<LocationEntity>(viewModel);
@@ -54,7 +54,7 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<LocationViewModel> Update(Guid id, UpdateLocationViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<LocationViewModel> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateLocationViewModel viewModel, CancellationToken cancellationToken)
         {
             await _updateLocationViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<LocationEntity>(viewModel);
@@ -63,7 +63,7 @@ namespace ScooterBooking.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public Task DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             return _locationService.DeleteAsync(id, cancellationToken);
         }

@@ -14,11 +14,7 @@ namespace ScooterBooking.Presentation.Validators.Booking
             RuleFor(x => x.EndsAt)
                 .GreaterThan(x => x.StartsAt)
                 .WithMessage("The end date must be later than the start date.");
-
-            RuleFor(x => x.TotalPrice)
-                .GreaterThan(0)
-                .WithMessage("The total price must be greater than zero.");
-
+            
             RuleFor(x => x.UserId)
                 .NotEmpty()
                 .WithMessage("User ID is required.");
