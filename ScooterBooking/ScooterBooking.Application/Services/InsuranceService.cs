@@ -5,8 +5,8 @@ using ScooterBooking.Domain.Interfaces.Services;
 
 namespace ScooterBooking.Application.Services
 {
-    public class InsuranceService(IGenericRepository<InsuranceEntity> genericRepository, IMapper mapper)
-        : GenericService<InsuranceEntity>(genericRepository, mapper), IInsuranceService
+    public class InsuranceService(IInsuranceRepository insuranceRepository, IMapper mapper)
+        : GenericService<InsuranceEntity>(insuranceRepository, mapper), IInsuranceService
     {
     }
 }

@@ -23,10 +23,10 @@ namespace ScooterBooking.Infrastructure.Repositories
             return entity;
         }
 
-        public virtual void DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+        public virtual Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         {
             _dbSet.Remove(entity);
-            _context.SaveChangesAsync(cancellationToken);
+            return _context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual Task<PagedResult<TEntity>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)

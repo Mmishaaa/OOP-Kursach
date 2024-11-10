@@ -5,8 +5,8 @@ using ScooterBooking.Domain.Interfaces.Services;
 
 namespace ScooterBooking.Application.Services
 {
-    public class ReviewService(IGenericRepository<ReviewEntity> genericRepository, IMapper mapper) : 
-        GenericService<ReviewEntity>(genericRepository, mapper), IReviewService
+    public class ReviewService(IReviewRepository reviewRepository, IMapper mapper) : 
+        GenericService<ReviewEntity>(reviewRepository, mapper), IReviewService
     {
     }
 }
