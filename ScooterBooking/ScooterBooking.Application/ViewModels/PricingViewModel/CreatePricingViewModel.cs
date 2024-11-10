@@ -3,5 +3,5 @@
     public record CreatePricingViewModel(
         decimal SpeedPriceHour,
         int MaxSpeed,
-        Guid? ScooterId);
+        Guid ScooterId);
 }

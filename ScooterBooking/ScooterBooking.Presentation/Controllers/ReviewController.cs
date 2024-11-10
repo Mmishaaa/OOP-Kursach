@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.ReviewViewModel;
 using ScooterBooking.Domain.Entities;
@@ -14,10 +15,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly IReviewService _reviewService;
         private readonly IMapper _mapper;
-        public ReviewController(IReviewService reviewService, IMapper mapper)
+        private readonly IValidator<CreateReviewViewModel> _createReviewViewModelValidator;
+        private readonly IValidator<UpdateReviewViewModel> _updateReviewViewModelValidator;
+        public ReviewController(
+            IReviewService reviewService,
+            IMapper mapper,
+            IValidator<CreateReviewViewModel> createReviewViewModelValidator,
+            IValidator<UpdateReviewViewModel> updateReviewViewModelValidator)
         {
             _reviewService = reviewService;
             _mapper = mapper;
+            _createReviewViewModelValidator = createReviewViewModelValidator;
+            _updateReviewViewModelValidator = updateReviewViewModelValidator;
         }
 
         [HttpGet]
@@ -37,7 +46,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<ReviewViewModel> CreateAsync([FromBody] CreateReviewViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createReviewViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var ReviewEntity = _mapper.Map<ReviewEntity>(viewModel);
             var result = await _reviewService.AddAsync(ReviewEntity, cancellationToken);
             return _mapper.Map<ReviewViewModel>(result);
@@ -46,7 +55,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<ReviewViewModel> Update([FromRoute] Guid id, [FromBody] UpdateReviewViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updateReviewViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<ReviewEntity>(viewModel);
             var result = await _reviewService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<ReviewViewModel>(result);

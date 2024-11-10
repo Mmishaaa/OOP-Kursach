@@ -21,6 +21,11 @@ namespace ScooterBooking.Presentation.Middlewares
             {
                 await _next(context);
             }
+            catch (FluentValidation.ValidationException exception)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await HandleExceptionAsync(context, exception);
+            }
             catch (NotFoundException exception)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;

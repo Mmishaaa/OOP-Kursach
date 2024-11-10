@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.PricingViewModel;
 using ScooterBooking.Domain.Entities;
@@ -14,10 +15,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly IPricingService _pricingService;
         private readonly IMapper _mapper;
-        public PricingController(IPricingService pricingService, IMapper mapper)
+        private readonly IValidator<CreatePricingViewModel> _createPricingViewModelValidator;
+        private readonly IValidator<UpdatePricingViewModel> _updatePricingViewModelValidator;
+        public PricingController(
+            IPricingService pricingService,
+            IMapper mapper,
+            IValidator<CreatePricingViewModel> createPricingViewModelValidator,
+            IValidator<UpdatePricingViewModel> updatePricingViewModelValidator)
         {
             _pricingService = pricingService;
             _mapper = mapper;
+            _createPricingViewModelValidator = createPricingViewModelValidator;
+            _updatePricingViewModelValidator = updatePricingViewModelValidator;
         }
 
         [HttpGet]
@@ -37,7 +46,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<PricingViewModel> CreateAsync([FromBody] CreatePricingViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createPricingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var pricingEntity = _mapper.Map<PricingEntity>(viewModel);
             var result = await _pricingService.AddAsync(pricingEntity, cancellationToken);
             return _mapper.Map<PricingViewModel>(result);
@@ -46,7 +55,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<PricingViewModel> Update([FromRoute] Guid id, [FromBody] UpdatePricingViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updatePricingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<PricingEntity>(viewModel);
             var result = await _pricingService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<PricingViewModel>(result);

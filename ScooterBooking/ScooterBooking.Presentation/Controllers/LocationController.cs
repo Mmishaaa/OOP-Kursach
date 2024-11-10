@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.LocationViewModel;
 using ScooterBooking.Domain.Entities;
@@ -15,10 +16,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly ILocationService _locationService;
         private readonly IMapper _mapper;
-        public LocationController(ILocationService locationService, IMapper mapper)
+        private readonly IValidator<CreateLocationViewModel> _createLocationViewModelValidator;
+        private readonly IValidator<UpdateLocationViewModel> _updateLocationViewModelValidator;
+        public LocationController(
+            ILocationService locationService,
+            IMapper mapper,
+            IValidator<CreateLocationViewModel> createLocationViewModelValidator,
+            IValidator<UpdateLocationViewModel> updateLocationViewModelValidator)
         {
             _locationService = locationService;
             _mapper = mapper;
+            _createLocationViewModelValidator = createLocationViewModelValidator;
+            _updateLocationViewModelValidator = updateLocationViewModelValidator;
         }
 
         [HttpGet]
@@ -38,7 +47,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<LocationViewModel> CreateAsync(CreateLocationViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createLocationViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var locationEntity = _mapper.Map<LocationEntity>(viewModel);
             var result = await _locationService.AddAsync(locationEntity, cancellationToken);
             return _mapper.Map<LocationViewModel>(result);
@@ -47,7 +56,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<LocationViewModel> Update(Guid id, UpdateLocationViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updateLocationViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<LocationEntity>(viewModel);
             var result = await _locationService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<LocationViewModel>(result);

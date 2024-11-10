@@ -5,6 +5,6 @@ namespace ScooterBooking.Application.ViewModels.ReviewViewModel
     public record UpdateReviewViewModel(
         Rating Rating,
         string Text,
-        Guid? UserId,
-        Guid? BookingId);
+        Guid UserId,
+        Guid BookingId);
 }

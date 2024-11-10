@@ -5,5 +5,5 @@
         string LastName,
         string Email,
         int PhoneNumber,
-        List<Guid> BookingIds);
+        List<Guid>? BookingIds);
 }

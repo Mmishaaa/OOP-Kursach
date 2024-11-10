@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.InsuranceViewModel;
 using ScooterBooking.Domain.Entities;
@@ -14,10 +15,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly IInsuranceService _insuranceService;
         private readonly IMapper _mapper;
-        public InsuranceController(IInsuranceService insuranceService, IMapper mapper)
+        private readonly IValidator<CreateInsuranceViewModel> _createInsuranceViewModelValidator;
+        private readonly IValidator<UpdateInsuranceViewModel> _updateInsuranceViewModelValidator;
+        public InsuranceController(
+            IInsuranceService insuranceService,
+            IMapper mapper,
+            IValidator<CreateInsuranceViewModel> createInsuranceViewModelValidator,
+            IValidator<UpdateInsuranceViewModel> updateInsuranceViewModelValidator)
         {
             _insuranceService = insuranceService;
             _mapper = mapper;
+            _createInsuranceViewModelValidator = createInsuranceViewModelValidator;
+            _updateInsuranceViewModelValidator = updateInsuranceViewModelValidator;
         }
 
         [HttpGet]
@@ -37,7 +46,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<InsuranceViewModel> CreateAsync(CreateInsuranceViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createInsuranceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var insuranceEntity = _mapper.Map<InsuranceEntity>(viewModel);
             var result = await _insuranceService.AddAsync(insuranceEntity, cancellationToken);
             return _mapper.Map<InsuranceViewModel>(result);
@@ -46,7 +55,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<InsuranceViewModel> Update(Guid id, UpdateInsuranceViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updateInsuranceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<InsuranceEntity>(viewModel);
             var result = await _insuranceService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<InsuranceViewModel>(result);
