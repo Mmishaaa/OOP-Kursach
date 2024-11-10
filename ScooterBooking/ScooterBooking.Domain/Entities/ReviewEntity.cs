@@ -1,8 +1,9 @@
 ﻿using ScooterBooking.Domain.Enums;
+using ScooterBooking.Domain.Interfaces.Interceptors;
 
 namespace ScooterBooking.Domain.Entities
 {
-    public class ReviewEntity : BaseEntity
+    public class ReviewEntity : BaseEntity, IAuditable
     {
         public Rating Rating { get; set; }
         public string Text { get; set; } = string.Empty;

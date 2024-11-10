@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScooterBooking.Domain.Entities;
+using ScooterBooking.Infrastructure.Interceptors;
 
 namespace ScooterBooking.Infrastructure
 {
@@ -12,6 +13,12 @@ namespace ScooterBooking.Infrastructure
             {
                 Database.Migrate();
             }
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .AddInterceptors(new UpdateAuditableInterceptor());
         }
 
         public DbSet<BookingEntity> Bookings { get; set; }
