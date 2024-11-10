@@ -1,6 +1,6 @@
 using ScooterBooking.Application.DI;
 using ScooterBooking.Infrastructure.DI;
-using ScooterBooking.Presentation.Mapper;
+using ScooterBooking.Presentation.DI;
 using ScooterBooking.Presentation.Middlewares;
 using Serilog;
 
@@ -10,11 +10,11 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddPresentationDependencies();
 builder.Services.AddApplicationDependencies();
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
 

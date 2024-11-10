@@ -7,7 +7,7 @@ namespace ScooterBooking.Application.ViewModels.ScooterViewModel
         string Model,
         string Color,
         ScooterStatus Status,
-        Guid? InsuranceId,
-        Guid? LocationId
+        Guid InsuranceId,
+        Guid LocationId
     );
 }

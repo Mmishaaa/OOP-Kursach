@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.ScooterViewModel;
 using ScooterBooking.Domain.Entities;
@@ -14,10 +15,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly IScooterService _scooterService;
         private readonly IMapper _mapper;
-        public ScooterController(IScooterService scooterService, IMapper mapper)
+        private readonly IValidator<CreateScooterViewModel> _createScooterViewModelValidator;
+        private readonly IValidator<UpdateScooterViewModel> _updateScooterViewModelValidator;
+        public ScooterController(
+            IScooterService scooterService,
+            IMapper mapper,
+            IValidator<CreateScooterViewModel> createScooterViewModelValidator,
+            IValidator<UpdateScooterViewModel> updateScooterViewModelValidator)
         {
             _scooterService = scooterService;
             _mapper = mapper;
+            _createScooterViewModelValidator = createScooterViewModelValidator;
+            _updateScooterViewModelValidator = updateScooterViewModelValidator;
         }
 
         [HttpGet]
@@ -37,7 +46,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<ScooterViewModel> CreateAsync([FromBody] CreateScooterViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createScooterViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var scooterEntity = _mapper.Map<ScooterEntity>(viewModel);
             var result = await _scooterService.AddAsync(scooterEntity, cancellationToken);
             return _mapper.Map<ScooterViewModel>(result);
@@ -46,7 +55,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<ScooterViewModel> Update([FromRoute] Guid id, [FromBody] UpdateScooterViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updateScooterViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<ScooterEntity>(viewModel);
             var result = await _scooterService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<ScooterViewModel>(result);

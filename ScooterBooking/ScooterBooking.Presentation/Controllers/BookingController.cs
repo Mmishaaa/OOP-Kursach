@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ScooterBooking.Application.ViewModels.BookingViewModel;
 using ScooterBooking.Domain.Entities;
@@ -14,10 +15,18 @@ namespace ScooterBooking.Presentation.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
-        public BookingController(IBookingService bookingService, IMapper mapper)
+        private readonly IValidator<CreateBookingViewModel> _createBookingViewModelValidator;
+        private readonly IValidator<UpdateBookingViewModel> _updateBookingViewModelValidator;
+        public BookingController(
+            IBookingService bookingService,
+            IMapper mapper,
+            IValidator<CreateBookingViewModel> createBookingViewModelValidator,
+            IValidator<UpdateBookingViewModel> updateBookingViewModelValidator)
         {
             _bookingService = bookingService;
             _mapper = mapper;
+            _createBookingViewModelValidator = createBookingViewModelValidator;
+            _updateBookingViewModelValidator = updateBookingViewModelValidator;
         }
 
         [HttpGet]
@@ -37,7 +46,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPost]
         public async Task<BookingViewModel> CreateAsync([FromBody] CreateBookingViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _createAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _createBookingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var assistance = _mapper.Map<BookingEntity>(viewModel);
             var result = await _bookingService.AddAsync(assistance, cancellationToken);
             return _mapper.Map<BookingViewModel>(result);
@@ -46,7 +55,7 @@ namespace ScooterBooking.Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<BookingViewModel> Update([FromRoute] Guid id, [FromBody] UpdateBookingViewModel viewModel, CancellationToken cancellationToken)
         {
-            //await _updateAssistanceViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
+            await _updateBookingViewModelValidator.ValidateAndThrowAsync(viewModel, cancellationToken);
             var modelToUpdate = _mapper.Map<BookingEntity>(viewModel);
             var result = await _bookingService.UpdateAsync(id, modelToUpdate, cancellationToken);
             return _mapper.Map<BookingViewModel>(result);
