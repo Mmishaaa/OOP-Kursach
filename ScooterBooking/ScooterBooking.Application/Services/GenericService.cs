@@ -29,7 +29,7 @@ namespace ScooterBooking.Application.Services
             var modelToDelete = await _genericRepository.GetByIdAsync(id, cancellationToken);
             if (modelToDelete is not null)
             {
-                _genericRepository.DeleteAsync(modelToDelete, cancellationToken);
+                await _genericRepository.DeleteAsync(modelToDelete, cancellationToken);
             }
         }
 

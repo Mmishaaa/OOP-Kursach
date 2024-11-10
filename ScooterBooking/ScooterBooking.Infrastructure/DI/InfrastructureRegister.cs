@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using ScooterBooking.Domain.Interfaces.Repositories;
+using ScooterBooking.Infrastructure.Repositories;
 
 namespace ScooterBooking.Infrastructure.DI
 {
@@ -26,6 +28,15 @@ namespace ScooterBooking.Infrastructure.DI
                         errorNumbersToAdd: null)
                 );
             });
+
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IInsuranceRepository, InsuranceRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPricingRepository, PricingRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IScooterRepository, ScooterRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

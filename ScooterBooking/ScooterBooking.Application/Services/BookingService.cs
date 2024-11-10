@@ -5,8 +5,8 @@ using ScooterBooking.Domain.Interfaces.Services;
 
 namespace ScooterBooking.Application.Services
 {
-    public class BookingService(IGenericRepository<BookingEntity> genericRepository, IMapper mapper)
-        : GenericService<BookingEntity>(genericRepository, mapper), IBookingService
+    public class BookingService(IBookingRepository bookingRepository, IMapper mapper)
+        : GenericService<BookingEntity>(bookingRepository, mapper), IBookingService
     {
     }
 }
